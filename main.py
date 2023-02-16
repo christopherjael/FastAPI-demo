@@ -1,15 +1,15 @@
 from fastapi import FastAPI
 import uvicorn
-
 import requests
 
 app = FastAPI()
 
-
+""" home route """
 @app.get('/v1/')
 async def root():
     return {'status': 200, 'message': 'Welcome to FastAPI'}
 
+""" people route """
 @app.get('/v1/people')
 async def get_ramdon_user():
     url = 'https://randomuser.me/api/'
@@ -21,12 +21,13 @@ async def get_ramdon_user():
     result  = res.json()
     return {'data': result}
 
-
+""" route not found handler """
 @app.get('*')
 async def page_not_found():
     return {
         "detail": "Not Found"
     }
+
 
 if __name__ == "__main__":
     config = uvicorn.Config("main:app", port=5000, log_level="info")
